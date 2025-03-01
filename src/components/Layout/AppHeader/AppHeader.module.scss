@@ -1,0 +1,44 @@
+@use '../../../styles/variables' as vars; 
+@use '../../../styles/mixins' as mix;
+
+.header {
+  @include mix.flex-between;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  background-color: rgba(vars.$dark-primary, 0.03);
+  border-bottom: 1px solid rgba(vars.$dark-primary, 0.1);
+  height: 70px;
+  
+  @include mix.mobile {
+    display: none;
+    padding: vars.$spacing-sm vars.$spacing-md;
+  }
+  
+  .searchContainer {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 vars.$spacing-lg;
+    
+    @include mix.mobile {
+      margin: 0 vars.$spacing-sm;
+      max-width: unset;
+    }
+  }
+  
+  .actions {
+    @include mix.flex-center;
+    gap: vars.$spacing-md;
+    
+    .actionButton {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      @include mix.flex-center;
+      color: vars.$dark-primary;
+      transition: vars.$transition-normal;
+      
+      &:hover {
+        background-color: rgba(vars.$dark-primary, 0.1);
+      }
+    }
+  }
+}

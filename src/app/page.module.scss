@@ -1,0 +1,188 @@
+@use '../styles/variables' as vars; 
+@use '../styles/mixins' as mix;
+
+// Global style to prevent scrolling on small screens
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  
+  @include mix.mobile {
+    height: 100vh;
+    overflow: hidden;
+  }
+}
+
+.headerSection {
+  margin-top: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: vars.$spacing-md 0;
+  text-align: center;
+  
+  @include mix.mobile {
+    padding-top: vars.$spacing-md;
+    color: white;
+  }
+  
+  .cityName {
+    font-size: 2rem;
+    margin-bottom: vars.$spacing-xs;
+    
+    @include mix.mobile {
+      font-size: 1.8rem;
+    }
+  }
+  
+  .temperature {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1;
+    
+    @include mix.mobile {
+      font-size: 6rem;
+      margin-bottom: vars.$spacing-xs;
+    }
+  }
+  
+  .weatherDescription {
+    font-size: 1.2rem;
+    margin-bottom: vars.$spacing-xs;
+    
+    @include mix.mobile {
+      font-size: 1.4rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+  }
+  
+  .highLowTemp {
+    font-size: 1rem;
+    
+    @include mix.mobile {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+.heroSection {
+  margin-bottom: vars.$spacing-xl * 2;
+  
+  .mobileHouseImage {
+    display: none;
+    margin: 0 auto;
+    width: 100%;
+    scale: 1.5;
+    height: auto;
+    margin: 0 auto;
+    text-align: center;
+    
+    @include mix.mobile {
+      display: block;
+      margin-top: 40%;
+      margin-bottom: vars.$spacing-lg;
+    }
+  }
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: vars.$spacing-lg;
+  
+  @include mix.mobile {
+    grid-template-columns: 1fr;
+  }
+  
+  .weatherCardWrapper {
+    min-height: 450px;
+    border-radius: vars.$border-radius-lg;
+    overflow: hidden;
+    
+    &.featured {
+      grid-column: span 2;
+      
+      @include mix.mobile {
+        grid-column: span 1;
+      }
+    }
+  }
+}
+
+.sectionTitle {
+  margin: vars.$spacing-xl 0 vars.$spacing-lg;
+  font-size: 1.8rem;
+}
+
+.statsSection {
+  margin: vars.$spacing-xl * 2 0;
+  
+  .statsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: vars.$spacing-lg;
+    
+    @include mix.mobile {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .statCard {
+      padding: vars.$spacing-lg;
+      text-align: center;
+      background: rgba(vars.$weather-solid-1, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: vars.$border-radius-lg;
+      
+      .statValue {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: vars.$spacing-sm;
+      }
+      
+      .statLabel {
+        color: rgba(vars.$text-color, 0.7);
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.forecastSection {
+  margin-bottom: vars.$spacing-xl * 2;
+}
+
+.infoSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: vars.$spacing-xl;
+  margin-bottom: vars.$spacing-xl * 2;
+  
+  @include mix.mobile {
+    grid-template-columns: 1fr;
+  }
+  
+  .infoCard {
+    height: 100%;
+    background: rgba(vars.$weather-solid-1, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: vars.$border-radius-lg;
+    padding: vars.$spacing-lg;
+    
+    h3 {
+      margin-bottom: vars.$spacing-md;
+    }
+    
+    p {
+      color: rgba(vars.$text-color, 0.7);
+      line-height: 1.6;
+    }
+  }
+}

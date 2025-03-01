@@ -1,0 +1,213 @@
+@use './variables' as vars;
+
+// Flexbox mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+// Responsive mixins
+@mixin mobile {
+  @media (max-width: #{vars.$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{vars.$breakpoint-sm}) and (max-width: #{vars.$breakpoint-lg - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (min-width: #{vars.$breakpoint-sm}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{vars.$breakpoint-lg}) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (min-width: #{vars.$breakpoint-xl}) {
+    @content;
+  }
+}
+
+// Button styles
+@mixin button-base {
+  cursor: pointer;
+  border: none;
+  border-radius: vars.$border-radius-md;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  font-weight: 500;
+  transition: vars.$transition-normal;
+}
+
+@mixin primary-button {
+  @include button-base;
+  background-color: vars.$primary-color;
+  color: vars.$background-color;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+  
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+@mixin secondary-button {
+  @include button-base;
+  background-color: transparent;
+  border: 1px solid vars.$primary-color;
+  color: vars.$primary-color;
+  
+  &:hover {
+    background-color: rgba(vars.$primary-color, 0.1);
+  }
+  
+  &:active {
+    background-color: rgba(vars.$primary-color, 0.2);
+  }
+}
+
+// Card styles
+@mixin card {
+  background-color: rgba(vars.$dark-primary, 0.05);
+  border-radius: vars.$border-radius-lg;
+  box-shadow: vars.$card-shadow;
+  padding: vars.$spacing-lg;
+}
+
+// Glass effect
+@mixin glass-effect {
+  background: rgba(vars.$dark-primary, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(vars.$dark-primary, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+// Weather card specific mixins
+@mixin weather-glass-effect($blur-amount: 10px) {
+  backdrop-filter: blur($blur-amount);
+  -webkit-backdrop-filter: blur($blur-amount);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@mixin weather-card-inner-glow {
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: vars.$weather-card-top-glow;
+    pointer-events: none;
+    border-radius: vars.$border-radius-lg vars.$border-radius-lg 0 0;
+  }
+}
+
+@mixin weather-card-vignette {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: vars.$weather-card-vignette;
+    pointer-events: none;
+  }
+}
+
+@mixin tab-indicator($active-class) {
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    height: 3px;
+    background: transparent;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    width: 50%;
+    left: 0%;
+    background: vars.$tab-indicator-gradient;
+  }
+  
+  &.#{$active-class}:after {
+    left: 50%;
+  }
+}
+
+@mixin hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  width: 60px;
+  height: 146px;
+  background-color: #48319D;
+  border-radius: vars.$border-radius-pill;
+  padding: 10px;
+  box-sizing: border-box;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.2s ease, background-color 0.3s ease;
+ 
+  &.current {
+    background-color: vars.$hourly-item-current-bg;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin nav-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border: none;
+  color: vars.$primary-color;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: rgba(vars.$primary-color, 0.1);
+    transform: scale(1.05);
+  }
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}

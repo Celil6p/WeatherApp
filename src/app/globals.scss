@@ -1,0 +1,186 @@
+@use '../styles/variables' as vars;
+@use '../styles/mixins' as mix;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: vars.$font-family;
+  font-size: vars.$base-font-size;
+  color: vars.$text-color;
+  background: transparent; // Make the body transparent to show the starry background
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: vars.$primary-color;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: vars.$spacing-md;
+  font-weight: 600;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+// App Layout Structure
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+  
+  @include mix.mobile {
+    flex-direction: column;
+  }
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow: hidden;
+  
+  @include mix.mobile {
+    max-height: unset;
+    overflow: visible;
+  }
+}
+
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  
+  @media (min-width: #{vars.$breakpoint-sm}) {
+    padding: vars.$spacing-lg vars.$spacing-xl;
+  }
+  
+  @media (min-width: #{vars.$breakpoint-lg}) {
+    padding: vars.$spacing-xl vars.$spacing-xl * 2;
+  }
+}
+
+// Grid layout system
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: vars.$spacing-md;
+  
+  @include mix.mobile {
+    grid-template-columns: 1fr;
+  }
+  
+  .col-12 {
+    grid-column: span 12;
+  }
+  
+  .col-8 {
+    grid-column: span 12;
+    
+    @media (min-width: #{vars.$breakpoint-sm}) {
+      grid-column: span 8;
+    }
+  }
+  
+  .col-6 {
+    grid-column: span 12;
+    
+    @media (min-width: #{vars.$breakpoint-sm}) {
+      grid-column: span 6;
+    }
+  }
+  
+  .col-4 {
+    grid-column: span 12;
+    
+    @media (min-width: #{vars.$breakpoint-sm}) {
+      grid-column: span 6;
+    }
+    
+    @media (min-width: #{vars.$breakpoint-lg}) {
+      grid-column: span 4;
+    }
+  }
+  
+  .col-3 {
+    grid-column: span 6;
+    
+    @media (min-width: #{vars.$breakpoint-sm}) {
+      grid-column: span 4;
+    }
+    
+    @media (min-width: #{vars.$breakpoint-lg}) {
+      grid-column: span 3;
+    }
+  }
+}
+
+// Card container
+.card-container {
+  background-color: rgba(vars.$dark-primary, 0.05);
+  border-radius: vars.$border-radius-md;
+  overflow: hidden;
+  height: 100%;
+  box-shadow: vars.$card-shadow;
+}
+
+// Theme classes for weather gradients
+.weather-bg-clear {
+  background: vars.$weather-gradient-2;
+}
+
+.weather-bg-cloudy {
+  background: vars.$weather-gradient-3;
+}
+
+.weather-bg-rainy {
+  background: vars.$weather-gradient-4;
+}
+
+.weather-bg-storm {
+  background: vars.$weather-gradient-1;
+}
+
+.weather-bg-snow {
+  background: vars.$weather-gradient-5;
+}
+
+.weather-bg-night {
+  background: vars.$weather-gradient-1;
+}
+
+// Placeholder styling
+.placeholder {
+  background-color: rgba(vars.$dark-primary, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: vars.$border-radius-md;
+  padding: vars.$spacing-lg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: rgba(vars.$dark-primary, 0.6);
+  height: 100%;
+  min-height: 150px;
+}

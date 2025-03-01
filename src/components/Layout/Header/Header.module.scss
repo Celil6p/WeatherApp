@@ -1,0 +1,46 @@
+@use '../../../styles/variables' as vars; 
+@use '../../../styles/mixins' as mix;
+.header {
+  @include mix.flex-between;
+  padding: vars.$spacing-md 0;
+  border-bottom: 1px solid lighten(vars.$text-color, 70%);
+  margin-bottom: vars.$spacing-lg;
+  
+  .logo {
+    font-size: vars.$heading-font-size;
+    font-weight: bold;
+    color: vars.$primary-color;
+  }
+  
+  .nav {
+    @include mix.flex-center;
+    gap: vars.$spacing-md;
+    
+    @include mix.mobile {
+      gap: vars.$spacing-sm;
+    }
+    
+    a {
+      padding: vars.$spacing-sm;
+      color: vars.$text-color;
+      font-weight: 500;
+      position: relative;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        background-color: vars.$primary-color;
+        transition: vars.$transition-normal;
+      }
+      
+      &:hover:after,
+      &.active:after {
+        width: 100%;
+      }
+    }
+  }
+}

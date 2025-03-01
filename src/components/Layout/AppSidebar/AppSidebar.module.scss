@@ -1,0 +1,138 @@
+@use '../../../styles/variables' as vars; 
+@use '../../../styles/mixins' as mix;
+
+.sidebar {
+  width: 280px;
+  background-color: rgba(vars.$dark-primary, 0.05);
+  border-right: 1px solid rgba(vars.$dark-primary, 0.1);
+  padding: vars.$spacing-lg;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  
+  @include mix.mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 100;
+    transform: translateX(-100%);
+    
+    &.open {
+      transform: translateX(0);
+    }
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: vars.$spacing-sm;
+    margin-bottom: vars.$spacing-xl;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: vars.$primary-color;
+    
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
+  
+  .nav {
+    @include mix.flex-column;
+    gap: vars.$spacing-sm;
+    
+    .navItem {
+      display: flex;
+      align-items: center;
+      gap: vars.$spacing-md;
+      padding: vars.$spacing-md;
+      border-radius: vars.$border-radius-md;
+      transition: vars.$transition-normal;
+      color: vars.$text-color;
+      text-decoration: none;
+      
+      &:hover {
+        background-color: rgba(vars.$dark-primary, 0.1);
+      }
+      
+      &.active {
+        background-color: rgba(vars.$dark-primary, 0.15);
+        font-weight: 500;
+      }
+      
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+  
+  .favoriteLocations {
+    margin-top: vars.$spacing-xl;
+    
+    .sectionTitle {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: vars.$spacing-md;
+      color: rgba(vars.$text-color, 0.7);
+    }
+    
+    .locationsList {
+      @include mix.flex-column;
+      gap: vars.$spacing-sm;
+    }
+    
+    .locationItem {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: vars.$spacing-md;
+      border-radius: vars.$border-radius-md;
+      transition: vars.$transition-normal;
+      
+      &:hover {
+        background-color: rgba(vars.$dark-primary, 0.1);
+      }
+      
+      .locationInfo {
+        display: flex;
+        flex-direction: column;
+        
+        .locationName {
+          font-weight: 500;
+        }
+        
+        .locationTemp {
+          font-size: 0.9rem;
+          color: rgba(vars.$text-color, 0.7);
+        }
+      }
+      
+      .locationWeather {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  .sidebarFooter {
+    margin-top: auto;
+    padding-top: vars.$spacing-xl;
+    font-size: 0.9rem;
+    color: rgba(vars.$text-color, 0.5);
+    
+    .footerLinks {
+      display: flex;
+      gap: vars.$spacing-md;
+      margin-top: vars.$spacing-sm;
+      
+      a {
+        color: rgba(vars.$text-color, 0.7);
+        
+        &:hover {
+          color: vars.$text-color;
+        }
+      }
+    }
+  }
+}

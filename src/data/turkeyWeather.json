@@ -1,0 +1,171 @@
+{
+  "currentLocation": {
+    "city": "Istanbul",
+    "temperature": 24,
+    "description": "Partly Cloudy",
+    "highTemp": 27,
+    "lowTemp": 19,
+    "hourlyForecast": [
+      { "time": "12 PM", "temperature": 23, "icon": "Sun_cloud_angled_rain", "precipChance": 10 },
+      { "time": "Now", "temperature": 24, "icon": "Moon_cloud_fast_wind", "precipChance": 5 },
+      { "time": "2 PM", "temperature": 26, "icon": "Moon_cloud_fast_wind", "precipChance": 0 },
+      { "time": "3 PM", "temperature": 27, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+      { "time": "4 PM", "temperature": 26, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+    ],
+    "weeklyForecast": [
+      { "day": "Today", "icon": "Moon_cloud_fast_wind", "highTemp": 27, "lowTemp": 19, "precipChance": 5 },
+      { "day": "Mon", "icon": "Sun_cloud_angled_rain", "highTemp": 28, "lowTemp": 20, "precipChance": 0 },
+      { "day": "Tue", "icon": "Sun_cloud_angled_rain", "highTemp": 29, "lowTemp": 21, "precipChance": 0 },
+      { "day": "Wed", "icon": "Sun_cloud_mid_rain", "highTemp": 26, "lowTemp": 20, "precipChance": 40 },
+      { "day": "Thu", "icon": "Moon_cloud_mid_rain", "highTemp": 25, "lowTemp": 19, "precipChance": 60 },
+      { "day": "Fri", "icon": "Sun_cloud_angled_rain", "highTemp": 27, "lowTemp": 20, "precipChance": 20 },
+      { "day": "Sat", "icon": "Moon_cloud_fast_wind", "highTemp": 28, "lowTemp": 21, "precipChance": 10 }
+    ]
+  },
+  "cities": [
+    {
+      "name": "Ankara",
+      "temperature": 21,
+      "description": "Clear Sky",
+      "highTemp": 24,
+      "lowTemp": 16,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 21, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 22, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 23, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Izmir",
+      "temperature": 26,
+      "description": "Sunny",
+      "highTemp": 29,
+      "lowTemp": 22,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 26, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 27, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 28, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Antalya",
+      "temperature": 28,
+      "description": "Hot and Sunny",
+      "highTemp": 32,
+      "lowTemp": 24,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 28, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 30, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 31, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Bursa",
+      "temperature": 23,
+      "description": "Partly Cloudy",
+      "highTemp": 26,
+      "lowTemp": 19,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 23, "icon": "Moon_cloud_fast_wind", "precipChance": 10 },
+        { "time": "1 PM", "temperature": 24, "icon": "Moon_cloud_fast_wind", "precipChance": 5 },
+        { "time": "2 PM", "temperature": 25, "icon": "Moon_cloud_fast_wind", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Adana",
+      "temperature": 30,
+      "description": "Hot",
+      "highTemp": 34,
+      "lowTemp": 25,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 30, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 32, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 33, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Konya",
+      "temperature": 22,
+      "description": "Clear",
+      "highTemp": 25,
+      "lowTemp": 17,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 22, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 23, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 24, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Trabzon",
+      "temperature": 20,
+      "description": "Light Rain",
+      "highTemp": 22,
+      "lowTemp": 17,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 20, "icon": "Moon_cloud_mid_rain", "precipChance": 40 },
+        { "time": "1 PM", "temperature": 21, "icon": "Moon_cloud_mid_rain", "precipChance": 30 },
+        { "time": "2 PM", "temperature": 21, "icon": "Moon_cloud_mid_rain", "precipChance": 20 }
+      ]
+    },
+    {
+      "name": "Gaziantep",
+      "temperature": 27,
+      "description": "Sunny",
+      "highTemp": 31,
+      "lowTemp": 22,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 27, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 29, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 30, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Eskişehir",
+      "temperature": 21,
+      "description": "Partly Cloudy",
+      "highTemp": 24,
+      "lowTemp": 16,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 21, "icon": "Moon_cloud_fast_wind", "precipChance": 5 },
+        { "time": "1 PM", "temperature": 22, "icon": "Moon_cloud_fast_wind", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 23, "icon": "Moon_cloud_fast_wind", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Kayseri",
+      "temperature": 20,
+      "description": "Clear",
+      "highTemp": 23,
+      "lowTemp": 15,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 20, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 21, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 22, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Diyarbakır",
+      "temperature": 29,
+      "description": "Hot and Dry",
+      "highTemp": 33,
+      "lowTemp": 24,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 29, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 31, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 32, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    },
+    {
+      "name": "Mersin",
+      "temperature": 27,
+      "description": "Sunny",
+      "highTemp": 30,
+      "lowTemp": 23,
+      "hourlyForecast": [
+        { "time": "Now", "temperature": 27, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "1 PM", "temperature": 28, "icon": "Sun_cloud_angled_rain", "precipChance": 0 },
+        { "time": "2 PM", "temperature": 29, "icon": "Sun_cloud_angled_rain", "precipChance": 0 }
+      ]
+    }
+  ]
+} 

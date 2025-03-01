@@ -1,0 +1,57 @@
+  @use '../../styles/variables' as vars;
+  @use '../../styles/mixins' as mix;
+
+.searchContainer {
+  position: relative;
+  width: 100%;
+  
+  .searchInput {
+    width: 100%;
+    padding: vars.$spacing-md;
+    padding-right: 3rem;
+    border: 1px solid rgba(vars.$dark-primary, 0.2);
+    border-radius: vars.$border-radius-md;
+    font-size: 1rem;
+    background-color: rgba(vars.$dark-primary, 0.05);
+    color: vars.$text-color;
+    transition: vars.$transition-normal;
+    
+    &:focus {
+      outline: none;
+      border-color: rgba(vars.$dark-primary, 0.3);
+      background-color: rgba(vars.$dark-primary, 0.1);
+      box-shadow: 0 0 0 2px rgba(vars.$dark-primary, 0.05);
+    }
+    
+    &::placeholder {
+      color: rgba(vars.$text-color, 0.5);
+    }
+  }
+  
+  .searchButton {
+    position: absolute;
+    right: vars.$spacing-sm;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    color: rgba(vars.$dark-primary, 0.7);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: vars.$spacing-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: vars.$border-radius-md;
+    transition: vars.$transition-normal;
+    
+    &:hover {
+      color: vars.$dark-primary;
+      background-color: rgba(vars.$dark-primary, 0.1);
+    }
+    
+    &:active {
+      background-color: rgba(vars.$dark-primary, 0.2);
+    }
+  }
+}
