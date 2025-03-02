@@ -72,6 +72,12 @@ export default function WeatherCard({
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPlaceholders, setShowPlaceholders] = useState(false);
 
+  // New function to handle closing the expanded card
+  const handleClose = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent event from bubbling up
+    setIsExpanded(false);
+  };
+
   // Disable body scrolling when card is expanded
   useEffect(() => {
     const handleBodyScroll = () => {
@@ -204,6 +210,17 @@ export default function WeatherCard({
       onMouseUp={handleTouchEnd}
       onMouseLeave={() => isDragging && handleTouchEnd()}
     >
+      {/* Add close button - only visible when expanded */}
+      {isExpanded && (
+        <button 
+          className={styles.closeButton}
+          onClick={handleClose}
+          aria-label="Close expanded view"
+        >
+          ×
+        </button>
+      )}
+      
       {/* Header section with city and temperature */}
       { isExpanded && <div className={styles.headerSection}>
         <h2 className={styles.cityName}>{city}</h2>
@@ -252,14 +269,16 @@ export default function WeatherCard({
                 }`}
               >
                 <div className={styles.time}>{hour.time}</div>
-                <div className={styles.icon}>
-                  {renderWeatherIcon(hour.icon, 32)}
-                </div>
-                {hour.precipChance > 0 && (
-                  <div className={styles.precipChance}>
-                    {hour.precipChance}%
+                <div className={styles.iconContainer}>
+                  <div className={styles.icon}>
+                    {renderWeatherIcon(hour.icon, 32)}
                   </div>
-                )}
+                  {hour.precipChance > 0 && (
+                    <div className={styles.precipChance}>
+                      {hour.precipChance}%
+                    </div>
+                  )}
+                </div>
                 <div className={styles.hourTemp}>{hour.temperature}°</div>
               </div>
             ))}

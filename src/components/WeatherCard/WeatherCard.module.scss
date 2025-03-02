@@ -1,5 +1,5 @@
-@use '../../styles/variables' as vars;
-@use '../../styles/mixins' as mix;
+@use "../../styles/variables" as vars;
+@use "../../styles/mixins" as mix;
 
 .weatherCard {
   width: 100%;
@@ -13,16 +13,37 @@
   flex-direction: column;
   text-align: center;
   padding: vars.$spacing-lg;
-  
-  // Deep purple background for the card
-  background: linear-gradient(180deg, rgba(59, 46, 126, 0.95) 0%, rgba(39, 25, 79, 0.95) 100%);
-  
-  // Apply glass effect with reduced blur
-  @include mix.weather-glass-effect(vars.$weather-card-blur);
-  
-  // Add transition for smooth swipe animation
+
+  // Replace the deep purple background with darker-lighter-darker gradient
+  background: linear-gradient(
+    to right,
+    rgba(39, 25, 79, 0.75) 0%,
+    rgba(83, 46, 126, 0.55) 50%,
+    rgba(39, 25, 79, 0.75) 100%
+  );
+
+  @include mix.weather-glass-effect(15px);
+
+  // Add white glow shadow at the top
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 7px;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.5) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    pointer-events: none;
+    border-radius: vars.$border-radius-lg vars.$border-radius-lg 0 0;
+    z-index: 1;
+  }
+
   transition: transform 0.3s ease-out, height 0.3s ease-out;
-  
+
   @include mix.mobile {
     min-height: 250px;
     padding: vars.$spacing-lg;
@@ -34,7 +55,7 @@
     z-index: 100;
     max-height: 80vh; // Limit maximum height to 80% of viewport
     overflow-y: auto; // Allow scrolling within the card when expanded
-    
+
     &.expanded {
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.3);
       height: 100vh; // Set height to 100% of viewport when expanded
@@ -45,43 +66,43 @@
       transition: all 0.3s ease-out;
     }
   }
-  
+
   // Header section with city and temperature
   .headerSection {
     margin-bottom: vars.$spacing-md;
-    
+
     .cityName {
       font-size: 1.5rem;
       font-weight: 500;
       margin: 0;
       margin-bottom: vars.$spacing-xs;
     }
-    
+
     .currentConditions {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: vars.$spacing-xs;
-      
+
       .temperature {
         font-size: 1.2rem;
       }
-      
+
       .separator {
         opacity: 0.7;
       }
-      
+
       .weatherDescription {
         font-size: 1.2rem;
         opacity: 0.7;
       }
     }
   }
-  
+
   // Drag handle for mobile swipe
   .dragHandle {
     display: none;
-    
+
     @include mix.mobile {
       display: flex;
       justify-content: center;
@@ -89,7 +110,7 @@
       width: 100%;
       height: 20px;
       margin-bottom: vars.$spacing-sm;
-      
+
       .dragIndicator {
         width: 40px;
         height: 5px;
@@ -105,7 +126,7 @@
     flex-direction: column;
     position: relative;
     z-index: 1;
-    
+
     // Tab section styling with refined pipe and glow
     .tabs {
       display: flex;
@@ -116,10 +137,10 @@
       padding-left: 0;
       padding-right: 0;
       border-bottom: 1px solid rgba(vars.$primary-color, 0.15);
-      
+
       // Add tab indicator with gradient
-      @include mix.tab-indicator('weeklyActive');
-      
+      @include mix.tab-indicator("weeklyActive");
+
       .tab {
         padding: vars.$spacing-sm vars.$spacing-md;
         cursor: pointer;
@@ -131,7 +152,7 @@
         letter-spacing: 0.5px;
         width: 50%;
         text-align: center;
-        
+
         &.active {
           opacity: 1;
           font-weight: 600;
@@ -139,24 +160,24 @@
         }
       }
     }
-    
+
     // Slider wrapper for both forecast types
     .sliderWrapper {
       position: relative;
       height: 180px; // Fixed height for both forecast types
       overflow: hidden;
       flex: 1;
-      
+
       @include mix.mobile {
         height: auto;
         min-height: 180px;
-        
+
         .expanded & {
           min-height: 180px; // Reduced height when expanded to make room for additional content
         }
       }
     }
-    
+
     // Common styles for both forecast types
     .forecastContent {
       height: 100%;
@@ -164,77 +185,129 @@
       position: absolute;
       width: 100%;
       left: 0;
-      
+
       &.active {
         opacity: 1;
         transform: translateX(0);
         z-index: 2;
       }
-      
+
       &.inactive {
         opacity: 0;
         transform: translateX(20px);
         z-index: 1;
       }
     }
-    
+
     // Hourly forecast styling
     .hourlyForecast {
       display: flex;
-      align-items: center; // Center items vertically
-      justify-content: flex-start; // Start from the left
+      align-items: center;
+      justify-content: flex-start;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
-      gap: 20px; // 20px spacing between items
-      padding: vars.$spacing-md vars.$spacing-sm; // Consistent padding
-      height: 180px; // Fixed height that accommodates the hourly items
+      gap: 10px; 
+      padding: vars.$spacing-md vars.$spacing-sm;
+      height: 180px;
       width: 100%;
       box-sizing: border-box;
-      
+
       @include mix.hide-scrollbar;
-      
+
       .hourItem {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
         min-width: 60px;
-        height: 140px;
+        height: 146px;
         padding: vars.$spacing-md vars.$spacing-sm;
         border-radius: 30px;
         background-color: rgba(255, 255, 255, 0.1);
+        position: relative;
+        box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
         
+        // Create border with gradient
+        border: 1px solid transparent;
+        background-clip: padding-box;
+
+        // Add gradient border using mask
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: 30px;
+          padding: 1px;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.4) 0%,
+            rgba(123, 97, 255, 0.6) 100%
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+
         &.current {
           background-color: rgba(123, 97, 255, 0.5);
+
+          // Brighter glow for current item
+          &::before {
+            background: linear-gradient(
+              135deg,
+              rgba(255, 255, 255, 0.3) 0%,
+              rgba(123, 97, 255, 0.6) 100%
+            );
+          }
         }
-        
+
         .time {
           font-size: 0.9rem;
           margin-bottom: vars.$spacing-xs;
         }
-        
-        .icon {
+
+        .iconContainer {
+          position: relative;
           width: 40px;
-          height: 40px;
+          height: 70px; // Fixed height
           display: flex;
-          justify-content: center;
+          flex-direction: column;
           align-items: center;
-          margin-bottom: vars.$spacing-xs;
+          
+          .icon {
+            position: absolute;
+            top: 0; // Position at the top of container
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+
+          .precipChance {
+            position: absolute;
+            top: 40px; // Position directly under the icon (40px = icon height)
+            font-size: 1rem;
+            color: vars.$precip-chance-color;
+            font-weight: 800;
+            width: 100%;
+            text-align: center;
+          }
         }
-        
-        .precipChance {
-          font-size: 0.8rem;
-          color: rgba(vars.$primary-color, 0.7);
-          margin-bottom: vars.$spacing-xs;
-        }
-        
+
         .hourTemp {
           font-size: 1.1rem;
           font-weight: 500;
         }
       }
     }
-    
+
     // Weekly forecast styling
     .weeklyForecast {
       display: flex;
@@ -242,9 +315,9 @@
       padding-top: vars.$spacing-md;
       height: 100%;
       overflow-y: auto;
-      
+
       @include mix.hide-scrollbar;
-      
+
       .dayItem {
         display: flex;
         align-items: center;
@@ -253,22 +326,22 @@
         border-radius: vars.$border-radius-sm;
         margin-bottom: vars.$spacing-xs;
         transition: background-color 0.2s ease;
-        
+
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
         }
-        
+
         .dayInfo {
           display: flex;
           align-items: center;
-          
+
           .day {
             font-weight: 500;
             margin-right: vars.$spacing-md;
             min-width: 40px;
             text-align: left;
           }
-          
+
           .icon {
             width: 24px;
             height: 24px;
@@ -277,7 +350,7 @@
             justify-content: center;
             align-items: center;
           }
-          
+
           .precipChance {
             font-size: 0.8rem;
             color: rgba(vars.$primary-color, 0.7);
@@ -285,18 +358,18 @@
             text-align: center;
           }
         }
-        
+
         .tempRange {
           display: flex;
           align-items: center;
           margin-bottom: 0;
           font-size: 0.9rem;
-          
+
           .highTemp {
             margin-right: vars.$spacing-md;
             font-weight: 500;
           }
-          
+
           .lowTemp {
             opacity: 0.7;
           }
@@ -308,28 +381,32 @@
   // Additional content shown only when expanded on mobile
   .expandedContent {
     display: none;
-    
+
     @include mix.mobile {
       display: block;
       margin-top: vars.$spacing-xl;
       opacity: 0;
       animation: fadeIn 0.3s forwards;
-      
+
       @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
       }
     }
-    
+
     .expandedSection {
       margin-bottom: vars.$spacing-xl;
     }
-    
+
     .airQualityPlaceholder {
       background: rgba(255, 255, 255, 0.1);
       border-radius: vars.$border-radius-md;
       padding: vars.$spacing-md;
-      
+
       h3 {
         text-align: left;
         font-size: 0.8rem;
@@ -338,89 +415,89 @@
         margin-top: 0;
         margin-bottom: vars.$spacing-sm;
       }
-      
+
       .airQualityValue {
         font-weight: 600;
         font-size: 1.1rem;
         margin-bottom: vars.$spacing-md;
         text-align: left;
       }
-      
+
       .airQualityScale {
         height: 8px;
         background: rgba(255, 255, 255, 0.2);
         border-radius: 4px;
         overflow: hidden;
         margin-bottom: vars.$spacing-md;
-        
+
         .airQualityBar {
           width: 30%; // Represents the current air quality level
           height: 100%;
-          background: linear-gradient(to right, #4CAF50, #8BC34A);
+          background: linear-gradient(to right, #4caf50, #8bc34a);
           border-radius: 4px;
         }
       }
-      
+
       .seeMore {
         display: flex;
         justify-content: space-between;
         align-items: center;
         font-size: 0.9rem;
-        
+
         .chevron {
           font-size: 1.2rem;
         }
       }
     }
-    
+
     .insightsGrid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: vars.$spacing-md;
-      
+
       .insightItem {
         background: rgba(255, 255, 255, 0.1);
         border-radius: vars.$border-radius-md;
         padding: vars.$spacing-md;
         text-align: left;
-        
+
         .insightLabel {
           font-size: 0.8rem;
           opacity: 0.7;
           margin-bottom: vars.$spacing-xs;
         }
-        
+
         .insightValue {
           font-size: 1.4rem;
           font-weight: 600;
           margin-bottom: vars.$spacing-xs;
         }
-        
+
         .insightSubtext {
           font-size: 0.9rem;
           opacity: 0.7;
           margin-bottom: vars.$spacing-sm;
         }
-        
+
         .insightScale {
           height: 4px;
           background: rgba(255, 255, 255, 0.2);
           border-radius: 2px;
           overflow: hidden;
-          
+
           .insightBar {
             width: 40%;
             height: 100%;
-            background: linear-gradient(to right, #FF9800, #F44336);
+            background: linear-gradient(to right, #ff9800, #f44336);
             border-radius: 2px;
           }
         }
-        
+
         .sunGraph {
           height: 40px;
           position: relative;
           margin: vars.$spacing-sm 0;
-          
+
           .sunPath {
             position: absolute;
             top: 20px;
@@ -430,7 +507,7 @@
             border-radius: 100%;
             border-top: 2px solid rgba(255, 255, 255, 0.3);
           }
-          
+
           .sunDot {
             position: absolute;
             width: 8px;
@@ -441,19 +518,19 @@
             left: 30%;
           }
         }
-        
+
         .windDisplay {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          
+
           .windCompass {
             width: 60px;
             height: 60px;
             border-radius: 50%;
             border: 2px solid rgba(255, 255, 255, 0.2);
             position: relative;
-            
+
             .compassNeedle {
               position: absolute;
               top: 50%;
@@ -464,7 +541,7 @@
               transform: translate(-50%, -50%) rotate(45deg);
               transform-origin: bottom center;
             }
-            
+
             .compassN {
               position: absolute;
               top: 5px;
@@ -473,14 +550,14 @@
               font-size: 0.8rem;
             }
           }
-          
+
           .windSpeed {
             text-align: right;
-            
+
             .insightValue {
               margin-bottom: 0;
             }
-            
+
             .insightSubtext {
               margin-bottom: 0;
             }
@@ -493,5 +570,36 @@
   // Remove bottom nav as it will be a separate component
   .bottomNav {
     display: none;
+  }
+
+  // Add styling for the close button
+  .closeButton {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    padding: 0;
+    line-height: 1;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.4);
+    }
   }
 }

@@ -109,8 +109,14 @@
 @mixin weather-glass-effect($blur-amount: 10px) {
   backdrop-filter: blur($blur-amount);
   -webkit-backdrop-filter: blur($blur-amount);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    to right,
+    rgba(39, 25, 79, 0.75) 0%,
+    rgba(59, 46, 126, 0.55) 50%, 
+    rgba(39, 25, 79, 0.75) 100%
+  );
 }
 
 @mixin weather-card-inner-glow {
