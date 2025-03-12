@@ -1,9 +1,7 @@
-# Weather App UI (Frontend)
-
 ## ⚠️ **WARNING** ⚠️
-
 <span style="color: red; font-size: 1.5em;">Mobile view is recommended for evaluation, as desktop view is currently incomplete.</span>
 
+# Weather App UI (Frontend)
 
 This project is a frontend implementation of the [Weather App UI Design](https://www.figma.com/community/file/1100826294536456295/weather-app-ui-design) from Figma. It's built with Next.js, TypeScript, and SASS (SCSS). Currently, only a single page from the original Figma design has been partially implemented, focusing mainly on the mobile view. Desktop view remains incomplete, populated largely with placeholder components.
 
