@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import styles from "./WeatherCard.module.scss";
 import Image from "next/image";
+import MobileMenu from "../Layout/MobileMenu/MobileMenu";
 
 interface WeatherCardProps {
   city: string;
@@ -32,7 +33,7 @@ const availableIcons = [
   "Moon_cloud_mid_rain",
   "Sun_cloud_angled_rain",
   "Sun_cloud_mid_rain",
-  "Tornado"
+  "Tornado",
 ];
 
 // Helper function to check if a string is likely an emoji
@@ -54,13 +55,43 @@ export default function WeatherCard({
     { time: "4 AM", temperature: 19, icon: "🌧️", precipChance: 0 },
   ],
   weeklyForecast = [
-    { day: "Today", icon: "Moon_cloud_fast_wind", highTemp: 24, lowTemp: 18, precipChance: 0 },
-    { day: "Mon", icon: "Sun_cloud_angled_rain", highTemp: 22, lowTemp: 17, precipChance: 40 },
-    { day: "Tue", icon: "Sun_cloud_angled_rain", highTemp: 21, lowTemp: 16, precipChance: 80 },
-    { day: "Wed", icon: "Sun_cloud_mid_rain", highTemp: 23, lowTemp: 18, precipChance: 10 },
+    {
+      day: "Today",
+      icon: "Moon_cloud_fast_wind",
+      highTemp: 24,
+      lowTemp: 18,
+      precipChance: 0,
+    },
+    {
+      day: "Mon",
+      icon: "Sun_cloud_angled_rain",
+      highTemp: 22,
+      lowTemp: 17,
+      precipChance: 40,
+    },
+    {
+      day: "Tue",
+      icon: "Sun_cloud_angled_rain",
+      highTemp: 21,
+      lowTemp: 16,
+      precipChance: 80,
+    },
+    {
+      day: "Wed",
+      icon: "Sun_cloud_mid_rain",
+      highTemp: 23,
+      lowTemp: 18,
+      precipChance: 10,
+    },
     { day: "Thu", icon: "Tornado", highTemp: 26, lowTemp: 19, precipChance: 0 },
     { day: "Fri", icon: "Tornado", highTemp: 27, lowTemp: 20, precipChance: 0 },
-    { day: "Sat", icon: "Moon_cloud_fast_wind", highTemp: 25, lowTemp: 19, precipChance: 20 },
+    {
+      day: "Sat",
+      icon: "Moon_cloud_fast_wind",
+      highTemp: 25,
+      lowTemp: 19,
+      precipChance: 20,
+    },
   ],
   onAddLocation,
 }: WeatherCardProps) {
@@ -71,6 +102,29 @@ export default function WeatherCard({
   const [offsetY, setOffsetY] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
   const [showPlaceholders, setShowPlaceholders] = useState(false);
+  const [currentHourFormatted, setCurrentHourFormatted] = useState<string>("");
+
+  // Function to get the current hour in "h AM/PM" format
+  const getCurrentHourFormatted = (): string => {
+    const now = new Date();
+    let hours = now.getHours();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    return `${hours} ${ampm}`;
+  };
+
+  // Update current hour on component mount and when the component is visible
+  useEffect(() => {
+    setCurrentHourFormatted(getCurrentHourFormatted());
+
+    // Update the current hour every minute
+    const intervalId = setInterval(() => {
+      setCurrentHourFormatted(getCurrentHourFormatted());
+    }, 60000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   // New function to handle closing the expanded card
   const handleClose = (e: React.MouseEvent) => {
@@ -82,9 +136,9 @@ export default function WeatherCard({
   useEffect(() => {
     const handleBodyScroll = () => {
       if (isExpanded) {
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
       } else {
-        document.body.style.overflow = '';
+        document.body.style.overflow = "";
       }
     };
 
@@ -101,7 +155,7 @@ export default function WeatherCard({
     }
 
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
       if (timer) clearTimeout(timer);
     };
   }, [isExpanded]);
@@ -109,11 +163,14 @@ export default function WeatherCard({
   // Handle touch/mouse events for swipe
   const handleTouchStart = (e: React.TouchEvent | React.MouseEvent) => {
     // Only initiate dragging if:
-    // 1. Card is not expanded OR 
+    // 1. Card is not expanded OR
     // 2. Card is expanded and touch started on the drag handle
-    if (!isExpanded || (isExpanded && (e.target as Element).closest(`.${styles.dragHandle}`))) {
+    if (
+      !isExpanded ||
+      (isExpanded && (e.target as Element).closest(`.${styles.dragHandle}`))
+    ) {
       setIsDragging(true);
-      if ('touches' in e) {
+      if ("touches" in e) {
         setStartY(e.touches[0].clientY);
       } else {
         setStartY(e.clientY);
@@ -123,17 +180,17 @@ export default function WeatherCard({
 
   const handleTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
     if (!isDragging) return;
-    
+
     let currentY;
-    if ('touches' in e) {
+    if ("touches" in e) {
       currentY = e.touches[0].clientY;
       // Don't call preventDefault() here as it causes the error with passive listeners
     } else {
       currentY = e.clientY;
     }
-    
+
     const diff = currentY - startY;
-    
+
     // Allow dragging in appropriate directions based on expanded state
     if ((isExpanded && diff > 0) || (!isExpanded && diff < 0)) {
       setOffsetY(diff);
@@ -143,21 +200,21 @@ export default function WeatherCard({
   const handleTouchEnd = () => {
     if (!isDragging) return;
     setIsDragging(false);
-    
+
     // Threshold for expanding (15% of viewport height)
     const expandThreshold = window.innerHeight * 0.15;
     // Smaller threshold for collapsing (8% of viewport height)
     const collapseThreshold = window.innerHeight * 0.08;
-    
+
     // Only expand if dragged up enough when not expanded
     if (!isExpanded && offsetY < -expandThreshold) {
       setIsExpanded(true);
-    } 
+    }
     // Only collapse if dragged down enough when expanded
     else if (isExpanded && offsetY > collapseThreshold) {
       setIsExpanded(false);
     }
-    
+
     // Always reset the offset
     setOffsetY(0);
   };
@@ -166,42 +223,57 @@ export default function WeatherCard({
   const renderWeatherIcon = (icon: string, size: number) => {
     // If it's an emoji, just display it
     if (isEmoji(icon)) {
-      return <span style={{ fontSize: `${size/16}rem` }}>{icon}</span>;
+      return <span style={{ fontSize: `${size / 16}rem` }}>{icon}</span>;
     }
-    
+
     // If it's one of our known icon names, use the image from public directory
     if (availableIcons.includes(icon)) {
       return (
-        <Image 
+        <Image
           src={`/icons/${icon}.png`}
-          alt="Weather icon" 
-          width={size} 
+          alt="Weather icon"
+          width={size}
           height={size}
         />
       );
     }
-    
+
     // If it's a valid path, use it directly
-    if (icon.startsWith('/') || icon.startsWith('http')) {
-      return (
-        <Image 
-          src={icon} 
-          alt="Weather icon" 
-          width={size} 
-          height={size}
-        />
-      );
+    if (icon.startsWith("/") || icon.startsWith("http")) {
+      return <Image src={icon} alt="Weather icon" width={size} height={size} />;
     }
-    
+
     // Fallback to showing the icon string itself
-    return <span style={{ fontSize: `${size/16}rem` }}>🌤️</span>;
+    return <span style={{ fontSize: `${size / 16}rem` }}>🌤️</span>;
   };
 
+  // Reorder hourly forecast to start from current hour
+  const reorderedHourlyForecast = useMemo(() => {
+    // Find the index of the current hour
+    const currentHourIndex = hourlyForecast.findIndex(
+      (hour) => hour.time === currentHourFormatted
+    );
+    
+    // If current hour is not found in the forecast, return the original array
+    if (currentHourIndex === -1) return hourlyForecast;
+    
+    // Reorder the array to start from current hour and wrap around
+    const reordered = [
+      ...hourlyForecast.slice(currentHourIndex - 1),
+      ...hourlyForecast.slice(0, currentHourIndex - 1)
+    ];
+    
+    return reordered;
+  }, [hourlyForecast, currentHourFormatted]);
+
   return (
-    <div 
-      className={`${styles.weatherCard} ${isExpanded ? styles.expanded : ''}`}
+    <div
+      className={`${styles.weatherCard} ${isExpanded ? styles.expanded : ""}`}
       ref={cardRef}
-      style={isDragging ? { transform: `translateY(${offsetY}px)` } : {}}
+      style={{
+        ...(isDragging ? { transform: `translateY(${offsetY}px)` } : {}),
+        ...(isExpanded ? {} : { paddingBottom: '110px' })
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -212,7 +284,7 @@ export default function WeatherCard({
     >
       {/* Add close button - only visible when expanded */}
       {isExpanded && (
-        <button 
+        <button
           className={styles.closeButton}
           onClick={handleClose}
           aria-label="Close expanded view"
@@ -220,16 +292,18 @@ export default function WeatherCard({
           ×
         </button>
       )}
-      
+
       {/* Header section with city and temperature */}
-      { isExpanded && <div className={styles.headerSection}>
-        <h2 className={styles.cityName}>{city}</h2>
-        <div className={styles.currentConditions}>
-          <span className={styles.temperature}>{temperature}°</span>
-          <span className={styles.separator}>|</span>
-          <span className={styles.weatherDescription}>{description}</span>
+      {isExpanded && (
+        <div className={styles.headerSection}>
+          <h2 className={styles.cityName}>{city}</h2>
+          <div className={styles.currentConditions}>
+            <span className={styles.temperature}>{temperature}°</span>
+            <span className={styles.separator}>|</span>
+            <span className={styles.weatherDescription}>{description}</span>
+          </div>
         </div>
-      </div> }
+      )}
 
       <div className={styles.dragHandle}>
         <div className={styles.dragIndicator}></div>
@@ -260,15 +334,21 @@ export default function WeatherCard({
         </div>
 
         <div className={styles.sliderWrapper}>
-          <div className={`${styles.forecastContent} ${styles.hourlyForecast} ${activeTab === "hourly" ? styles.active : styles.inactive}`}>
-            {hourlyForecast.map((hour, index) => (
+          <div
+            className={`${styles.forecastContent} ${styles.hourlyForecast} ${
+              activeTab === "hourly" ? styles.active : styles.inactive
+            }`}
+          >
+            {reorderedHourlyForecast.map((hour, index) => (
               <div
-                key={index}
+                key={`hour-${index}`}
                 className={`${styles.hourItem} ${
-                  hour.time === "Now" ? styles.current : ""
+                  hour.time === currentHourFormatted ? styles.current : ""
                 }`}
               >
-                <div className={styles.time}>{hour.time}</div>
+                <div className={styles.time}>
+                  {hour.time === currentHourFormatted ? "Now" : hour.time}
+                </div>
                 <div className={styles.iconContainer}>
                   <div className={styles.icon}>
                     {renderWeatherIcon(hour.icon, 32)}
@@ -283,8 +363,12 @@ export default function WeatherCard({
               </div>
             ))}
           </div>
-          
-          <div className={`${styles.forecastContent} ${styles.weeklyForecast} ${activeTab === "weekly" ? styles.active : styles.inactive}`}>
+
+          <div
+            className={`${styles.forecastContent} ${styles.weeklyForecast} ${
+              activeTab === "weekly" ? styles.active : styles.inactive
+            }`}
+          >
             {weeklyForecast.map((day, index) => (
               <div key={index} className={styles.dayItem}>
                 <div className={styles.dayInfo}>
@@ -293,7 +377,9 @@ export default function WeatherCard({
                     {renderWeatherIcon(day.icon, 24)}
                   </div>
                   {day.precipChance > 0 && (
-                    <div className={styles.precipChance}>{day.precipChance}%</div>
+                    <div className={styles.precipChance}>
+                      {day.precipChance}%
+                    </div>
                   )}
                 </div>
                 <div className={styles.tempRange}>
@@ -322,7 +408,7 @@ export default function WeatherCard({
               </div>
             </div>
           </section>
-          
+
           <div className={styles.insightsGrid}>
             <div className={styles.insightItem}>
               <div className={styles.insightLabel}>UV INDEX</div>
@@ -332,7 +418,7 @@ export default function WeatherCard({
                 <div className={styles.insightBar}></div>
               </div>
             </div>
-            
+
             <div className={styles.insightItem}>
               <div className={styles.insightLabel}>SUNRISE</div>
               <div className={styles.insightValue}>5:28 AM</div>
@@ -342,7 +428,7 @@ export default function WeatherCard({
               </div>
               <div className={styles.insightSubtext}>Sunset: 7:25PM</div>
             </div>
-            
+
             <div className={styles.insightItem}>
               <div className={styles.insightLabel}>WIND</div>
               <div className={styles.windDisplay}>
@@ -356,7 +442,7 @@ export default function WeatherCard({
                 </div>
               </div>
             </div>
-            
+
             <div className={styles.insightItem}>
               <div className={styles.insightLabel}>RAINFALL</div>
               <div className={styles.insightValue}>1.8 mm</div>
@@ -366,38 +452,8 @@ export default function WeatherCard({
         </div>
       )}
 
-      <div className={styles.bottomNav}>
-        <button className={styles.navButton} aria-label="Location information">
-          <Image 
-            src="/icons/info.svg" 
-            alt="Info" 
-            width={24} 
-            height={24} 
-          />
-        </button>
-
-        <button
-          className={`${styles.navButton} ${styles.addButton}`}
-          aria-label="Add location"
-          onClick={onAddLocation}
-        >
-          <Image 
-            src="/icons/plus.svg" 
-            alt="Add" 
-            width={24} 
-            height={24} 
-          />
-        </button>
-
-        <button className={styles.navButton} aria-label="Menu">
-          <Image 
-            src="/icons/menu.svg" 
-            alt="Menu" 
-            width={24} 
-            height={24} 
-          />
-        </button>
-      </div>
+      {/* Replace the bottomNav with MobileMenu component */}
+      <MobileMenu isExpanded={isExpanded} onAddLocation={onAddLocation} />
     </div>
   );
 }

@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { Providers } from '@/store/providers';
 import AppHeader from '@/components/Layout/AppHeader/AppHeader';
 import AppSidebar from '@/components/Layout/AppSidebar/AppSidebar';
-import ThemeProvider from '@/components/ThemeProvider/ThemeProvider';
 import StarryBackground from '@/components/StarryBackground/StarryBackground';
 
 export const metadata: Metadata = {
@@ -20,7 +19,6 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <ThemeProvider>
             <StarryBackground />
             <div className="app-container">
               <AppSidebar />
@@ -31,7 +29,6 @@ export default function RootLayout({
                 </main>
               </div>
             </div>
-          </ThemeProvider>
         </Providers>
       </body>
     </html>
